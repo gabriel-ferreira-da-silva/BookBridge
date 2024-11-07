@@ -28,4 +28,18 @@ router.get('/user', (req, res) => {
   });
 });
 
+
+router.post('/user', (req, res) => {
+  const { name, username, email, password} = req.body;
+  const query = 'INSERT INTO users (name, username, email, password) VALUES (?,?,?,?)';
+  db.query(query, [name, username, email, password], (err, results) => {
+    if (err) {
+      res.status(500).send('Server error' + err);
+      return;
+    }
+    res.status(201).json({ id: results.insertId, name, username, email, password });
+  });
+});
+
+
 module.exports = router;
