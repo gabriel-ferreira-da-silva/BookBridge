@@ -1,13 +1,17 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    cd scripts
+    ./firstaction.sh
+fi
+
 if [ "$1" = "--push" ] || [ "$1" = "-p" ]; then
     if [ -z "$2" ]; then
         echo "no commit message given"
         exit 1
     fi
-    COMMIT_MSG="$2"
-    BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+    cd scripts
+    ./push.sh "$1" "$2"
     cd ..
-    git add .
-    git commit -m "$COMMIT_MSG"
-    git push -u origin "$BRANCH"
     exit 1
 fi
