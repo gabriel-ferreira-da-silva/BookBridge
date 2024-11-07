@@ -15,3 +15,10 @@ if [ "$1" = "--push" ] || [ "$1" = "-p" ]; then
     cd ..
     exit 1
 fi
+
+if [ "$1" = "--database" ] || [ "$1" = "-p" ]; then
+    cd scripts
+    ./database.sh "$1" "$2"
+    cd ..
+    exit 1
+fi

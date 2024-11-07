@@ -1,10 +1,14 @@
 CREATE DATABASE IF NOT EXISTS bookBridgeDB;
 
+DROP USER IF EXISTS 'bookUser'@'localhost';
 CREATE USER 'bookUser'@'localhost' IDENTIFIED BY 'bookUser';
+
 GRANT ALL PRIVILEGES ON bookBridgeDB.* TO 'bookUser'@'localhost';
 FLUSH PRIVILEGES;
 
 USE bookBridgeDB;
+
+DROP TABLE IF EXISTS users, books, clubs, sessions, reviews, readlist, user_clubs;
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
