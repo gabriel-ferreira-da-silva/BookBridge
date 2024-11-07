@@ -8,8 +8,8 @@ if [ "$1" = "--database" ] || [ "$1" = "-d" ]; then
         cd ..
         cd database
         sudo mysql -u root < setup.sql
-        sudo mysql -u root < create_books.sql
-        sudo mysql -u root < create_users.sql
+        sudo node create_users.js
         sudo mysql -u root < create_clubs.sql
+        echo "database restarted sucessfully"
     fi
 fi

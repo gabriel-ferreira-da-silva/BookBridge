@@ -24,9 +24,16 @@ if [ "$1" = "--database" ] || [ "$1" = "-p" ]; then
 fi
 
 
-if [ "$1" = "--check" ] || [ "$1" = "-p" ]; then
+if [ "$1" = "--check" ] || [ "$1" = "-c" ]; then
     cd scripts
     ./check.sh "$1" "$2"
     cd ..
+    exit 1
+fi
+
+
+if [ "$1" = "--run" ] || [ "$1" = "-r" ]; then
+    cd scripts
+    ./run.sh & cd ..
     exit 1
 fi
