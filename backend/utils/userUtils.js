@@ -74,8 +74,42 @@ const postUser = (name, username, email, password) => {
         });
     });
   };
+
+
+  const putUser = (username, name, email, password) => {
+    return new Promise((resolve, reject) => {
+
+      const query = 'UPDATE users SET name = ?, email = ?, password = ? WHERE username = ?';
   
+      db.query(query, [name, email, password, username], (dbErr, results) => {
+        if (dbErr) return reject(dbErr);  
+        
+        if (results.affectedRows === 0) {
+          return reject(new Error('No user found with that username')); 
+        }
+        
+        resolve({ id: results.insertId, name, username, email, status: 200 });
+      });
+    });
+  };
+
+  const deleteUser = (username) => {
+    return new Promise((resolve, reject) => {
+
+      const query = 'DELETE FROM users WHERE users.username = ?;';
+  
+      db.query(query, [username], (dbErr, results) => {
+        if (dbErr) return reject(dbErr); 
+        
+        if (results.affectedRows === 0) {
+          return reject(new Error('No user found with that username')); 
+        }
+        
+        resolve({status: 200 });
+      });
+    });
+  };
 
   
   
-  module.exports = { fetchUserByUsername, fetchAllUsers, postUser, verifyUser};
+  module.exports = { deleteUser, fetchUserByUsername, fetchAllUsers,putUser, postUser, verifyUser};
