@@ -89,4 +89,28 @@ router.put('/club', async (req, res) => {
   }
 });
 
+
+
+router.delete('/club', async (req, res) => {
+  const { name, token } = req.body;
+  const isAuthorized = await Auth.verifyToken(token);
+  
+  if(isAuthorized == false){
+    res.status(500).send("authentication failed. are you registered?");
+    return;
+  }
+
+  try {
+    
+    const result = await Club.remove(name);
+    res.status(201).json(result);
+
+  } catch (error) {
+    
+    console.error("Error updating club:", error);
+    res.status(500).send("Server error: " + error.message);
+  
+  }
+});
+
 module.exports = router;

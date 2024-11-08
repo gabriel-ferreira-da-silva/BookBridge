@@ -69,5 +69,22 @@ const put = (name,description,target) => {
 };
 
 
+const remove = (name) => {
+  return new Promise((resolve, reject) => {
+      
+      const query = 'DELETE FROM clubs WHERE name = ?';
 
-module.exports = { fetchAll, fetch, post, put}
+
+      db.query(query, [name], (dbErr, results) => {
+      
+      if (dbErr) return reject(dbErr);
+      
+      resolve({ status: 201 });
+      
+      });
+  });
+};
+
+
+
+module.exports = { remove,fetchAll, fetch, post, put}
