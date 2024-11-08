@@ -95,7 +95,7 @@ router.delete('/user', async (req, res) => {
 
 router.post('/user', async (req, res) => {
   const { name, username, email, password, token } = req.body;
-  const hashedPassword = await User.hashPassword(password);
+  const hashedPassword = await Auth.hashPassword(password);
   const isAuthorized = await Auth.verifyToken(token);
   
   if(isAuthorized == false){

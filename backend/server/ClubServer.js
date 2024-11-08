@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const db = require('../utils/databaseUtils');
 const Club = require('../utils/clubUtils');
+const Auth= require('../utils/authUtils');
 
 db.connect((err) => {
   if (err) {
@@ -37,6 +38,30 @@ router.get('/club/name/:name', async (req, res) => {
   } catch (error) {
     
     res.status(500).send('Server error: ' + error.message);
+  
+  }
+});
+
+
+
+router.post('/club', async (req, res) => {
+  const { name, description, token } = req.body;
+  const isAuthorized = await Auth.verifyToken(token);
+  
+  if(isAuthorized == false){
+    res.status(500).send("authentication failed. are you registered?");
+    return;
+  }
+
+  try {
+    
+    const result = await Club.post(name, description);
+    res.status(201).json(result);
+
+  } catch (error) {
+    
+    console.error("Error creating club:", error);
+    res.status(500).send("Server error: " + error.message);
   
   }
 });

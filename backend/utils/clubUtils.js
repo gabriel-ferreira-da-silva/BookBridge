@@ -38,4 +38,19 @@ const fetch = (name) =>{
   })
 }
 
-module.exports = { fetchAll, fetch}
+const post = (name, description) => {
+  return new Promise((resolve, reject) => {
+      const query = 'INSERT INTO clubs (name, description) VALUES (?,?)';
+
+      db.query(query, [name, description], (dbErr, results) => {
+      
+      if (dbErr) return reject(dbErr);
+      
+      resolve({ id: results.insertId, name: results.name , description: results.description,  status: 201 });
+      
+      });
+  });
+};
+
+
+module.exports = { fetchAll, fetch, post}
