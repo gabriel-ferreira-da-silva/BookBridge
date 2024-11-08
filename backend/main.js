@@ -6,6 +6,7 @@ require('dotenv').config();
 const bookRouter = require('./server/BookServer');
 const clubRouter = require('./server/ClubServer');
 const userRouter = require('./server/UserServer');
+const listRouter = require('./server/ListServer');
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use('/api', bookRouter);
 app.use('/api', userRouter);
 app.use('/api', clubRouter);
+app.use('/api', listRouter);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
