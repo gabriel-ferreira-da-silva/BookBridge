@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('../utils/databaseUtils');
 const { fetchAllUsers, postUser, verifyUser} = require('../utils/userUtils');
+const { fetchUserByUsername} = require('../utils/userUtils');
 const { verifyToken, getToken, verifyPassword, hashPassword} = require('../utils/authUtils');
 
 require('dotenv').config();
@@ -31,6 +32,21 @@ router.get('/user', async (req, res) => {
   }
 });
 
+router.get('/user/username/:username', async (req, res) => {
+  try {
+
+    const { username } = req.params;
+    const results = await fetchUserByUsername(username); 
+    res.json(results);
+
+  } catch (error) {
+    
+    res.status(500).send('Server error: ' + error.message);
+  
+  }
+});
+
+
 router.post('/user', async (req, res) => {
   const { name, username, email, password, token } = req.body;
   const hashedPassword = await hashPassword(password);
@@ -53,7 +69,7 @@ router.post('/user', async (req, res) => {
   
   }
 });
-
+    
 
 
 router.post('/user/login', async (req, res) => {

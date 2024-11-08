@@ -41,8 +41,21 @@ const verifyUser = (username) =>{
             }
             
             resolve(results[0]);
-        });
-        
+        });       
+    })
+}
+
+
+
+const fetchUserByUsername = (username) =>{
+    return new Promise((resolve, reject)=>{
+        const query = 'SELECT * FROM users WHERE username = ?';
+        db.query(query, [username], (err, results) => {
+            if (err) {
+                reject(err);
+            }
+            resolve(results[0]);
+        });       
     })
 }
 
@@ -65,4 +78,4 @@ const postUser = (name, username, email, password) => {
 
   
   
-  module.exports = { fetchAllUsers, postUser, verifyUser};
+  module.exports = { fetchUserByUsername, fetchAllUsers, postUser, verifyUser};
