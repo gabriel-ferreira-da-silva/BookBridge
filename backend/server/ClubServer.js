@@ -3,12 +3,8 @@ const mysql = require('mysql2');
 const router = express.Router();
 require('dotenv').config();
 
-const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-});
+const db = require('../utils/databaseUtils');
+const Club = require('../utils/clubUtils');
 
 db.connect((err) => {
   if (err) {
@@ -18,14 +14,31 @@ db.connect((err) => {
   console.log('Connected to MySQL database');
 });
 
-router.get('/club', (req, res) => {
-  db.query('SELECT * FROM clubs', (err, results) => {
-    if (err) {
-      res.status(500).send('Server error');
-      return;
-    }
+router.get('/club', async (req, res) => {
+  try {
+    
+    const results = await Club.fetchAll(); 
     res.json(results);
-  });
+
+  } catch (error) {
+    
+    res.status(500).send('Server error: ' + error.message);
+  
+  }
+});
+
+
+router.get('/club/name/:name', async (req, res) => {
+  try {
+    const {name} = req.params;
+    const results = await Club.fetch(name); 
+    res.json(results);
+
+  } catch (error) {
+    
+    res.status(500).send('Server error: ' + error.message);
+  
+  }
 });
 
 module.exports = router;
