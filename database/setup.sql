@@ -8,7 +8,7 @@ FLUSH PRIVILEGES;
 
 USE bookBridgeDB;
 
-DROP TABLE IF EXISTS users, books, clubs, sessions, reviews, readlist, user_clubs;
+DROP TABLE IF EXISTS users, books, clubs, membership, reviews, readlist, compose;
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -31,17 +31,6 @@ CREATE TABLE clubs (
     description VARCHAR(2000)
 );
 
-CREATE TABLE sessions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    club_id INT,
-    title VARCHAR(255),
-    description VARCHAR(2000),
-    date_init DATETIME,
-    date_end DATETIME,
-    FOREIGN KEY (club_id) REFERENCES clubs(id)
-);
-
-
 CREATE TABLE reviews (
     user_id INT,
     book_id INT,
@@ -52,7 +41,7 @@ CREATE TABLE reviews (
     FOREIGN KEY (book_id) REFERENCES books(id)
 );
 
-CREATE TABLE user_clubs (
+CREATE TABLE membership (
     user_id INT,
     club_id INT,
     PRIMARY KEY (user_id, club_id),
@@ -61,9 +50,20 @@ CREATE TABLE user_clubs (
 );
 
 CREATE TABLE readlist (
+    name VARCHAR(255),
+    date_created DATETIME,
+    club_id INT,
+    PRIMARY KEY (date_created, club_id),
+    FOREIGN KEY (club_id) REFERENCES clubs(id)
+);
+
+CREATE TABLE compose (
+    list_date DATETIME,
+    list_id INT,
     book_id INT,
-    session_id INT,
-    PRIMARY KEY (book_id, session_id),
-    FOREIGN KEY (session_id) REFERENCES sessions(id),
+    
+    PRIMARY KEY (list_date, list_id, book_id),
+    FOREIGN KEY (list_date) REFERENCES readlist(date_created),
+    FOREIGN KEY (list_id) REFERENCES readlist(club_id),
     FOREIGN KEY (book_id) REFERENCES books(id)
 );
