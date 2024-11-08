@@ -66,4 +66,27 @@ router.post('/club', async (req, res) => {
   }
 });
 
+
+router.put('/club', async (req, res) => {
+  const { name, description,targetname, token } = req.body;
+  const isAuthorized = await Auth.verifyToken(token);
+  
+  if(isAuthorized == false){
+    res.status(500).send("authentication failed. are you registered?");
+    return;
+  }
+
+  try {
+    
+    const result = await Club.put(name, description, targetname);
+    res.status(201).json(result);
+
+  } catch (error) {
+    
+    console.error("Error updating club:", error);
+    res.status(500).send("Server error: " + error.message);
+  
+  }
+});
+
 module.exports = router;

@@ -52,5 +52,22 @@ const post = (name, description) => {
   });
 };
 
+const put = (name,description,target) => {
+  return new Promise((resolve, reject) => {
+      
+      const query = 'UPDATE clubs SET name = ?, description = ? WHERE name = ?';
 
-module.exports = { fetchAll, fetch, post}
+
+      db.query(query, [name, description,target], (dbErr, results) => {
+      
+      if (dbErr) return reject(dbErr);
+      
+      resolve({ id: results.insertId, name: results.name , description: results.description,  status: 201 });
+      
+      });
+  });
+};
+
+
+
+module.exports = { fetchAll, fetch, post, put}
