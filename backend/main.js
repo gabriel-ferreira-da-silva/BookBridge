@@ -7,6 +7,7 @@ const bookRouter = require('./server/BookServer');
 const clubRouter = require('./server/ClubServer');
 const userRouter = require('./server/UserServer');
 const listRouter = require('./server/ListServer');
+const reviewRouter = require('./server/ReviewServer');
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -24,6 +25,7 @@ app.use('/api', bookRouter);
 app.use('/api', userRouter);
 app.use('/api', clubRouter);
 app.use('/api', listRouter);
+app.use('/api', reviewRouter);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
