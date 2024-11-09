@@ -86,7 +86,6 @@ const remove = (user_id,book_id) => {
       
       const query = 'DELETE FROM reviews WHERE user_id = ? and book_id = ?';
 
-
       db.query(query, [user_id,book_id], (dbErr, results) => {
       
       if (dbErr) return reject(dbErr);

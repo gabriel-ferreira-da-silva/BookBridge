@@ -31,6 +31,7 @@ router.get('/review', async (req, res) => {
 
 router.get('/review/byUser/:user_id', async (req, res) => {
   try {
+
     const {user_id} = req.params;
     const results = await Review.fetchByUser(user_id); 
     res.json(results);
@@ -45,6 +46,7 @@ router.get('/review/byUser/:user_id', async (req, res) => {
 
 router.get('/review/byBook/:book_id', async (req, res) => {
   try {
+
     const {book_id} = req.params;
     const results = await Review.fetchByBook(book_id); 
     res.json(results);
