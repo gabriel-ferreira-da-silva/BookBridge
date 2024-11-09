@@ -1,9 +1,7 @@
 const express = require('express');
-const mysql = require('mysql2');
 const router = express.Router();
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const db = require('../utils/databaseUtils');
+
+const db = require('../modules/database/database');
 const User = require('../utils/userUtils');
 const Auth = require('../utils/authUtils');
 

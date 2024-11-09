@@ -1,7 +1,4 @@
-const db = require('./databaseUtils');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-
+const db = require('../modules/database/database');
 
 
 db.connect((err) => {

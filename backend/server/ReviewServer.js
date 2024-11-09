@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 const router = express.Router();
 require('dotenv').config();
 
-const db = require('../utils/databaseUtils');
+const db = require('../modules/database/database');
 const Review = require('../utils/reviewUtils');
 const Auth= require('../utils/authUtils');
 

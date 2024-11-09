@@ -1,7 +1,4 @@
-const db = require('./databaseUtils');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-
+const db = require('../modules/database/database');
 
 
 db.connect((err) => {
@@ -11,8 +8,6 @@ db.connect((err) => {
   }
   console.log('Connected to MySQL database');
 });
-
-
 
 const fetchAll = () => {
   return new Promise((resolve, reject) => {
