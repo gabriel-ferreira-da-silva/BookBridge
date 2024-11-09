@@ -38,7 +38,7 @@ const fetch = (title) =>{
   })
 }
 
-const post = (name, description) => {
+const post = (title, isbn) => {
   return new Promise((resolve, reject) => {
       const query = 'INSERT INTO books (title, isbn) VALUES (?,?)';
 

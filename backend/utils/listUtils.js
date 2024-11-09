@@ -1,7 +1,7 @@
 const db = require('./databaseUtils');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const datetime = new Date();
+
 
 
 db.connect((err) => {
@@ -40,14 +40,14 @@ const fetch = (name) =>{
 
 const post = (name, club_id) => {
   return new Promise((resolve, reject) => {
-      const date_created = datetime.now();
+    const date_created = new Date().toISOString().slice(0, 19).replace('T', ' ');
       const query = 'INSERT INTO readlist (name,date_created, club_id ) VALUES (?,?,?)';
 
       db.query(query, [name, date_created, club_id], (dbErr, results) => {
       
       if (dbErr) return reject(dbErr);
       
-      resolve({ id: results.id, title:results.title, isbn:results.isbn,  status: 201 });
+      resolve({ results:results, status: 201 });
       
       });
   });
@@ -63,7 +63,7 @@ const put = (name, targetname) => {
       
       if (dbErr) return reject(dbErr);
       
-      resolve({ id: results.insertId, name: results.name , status: 201 });
+      resolve({ results:results, status: 201 });
       
       });
   });
@@ -79,7 +79,7 @@ const remove = (name) => {
         
         if (dbErr) return reject(dbErr);
         
-        resolve({ status: 201 });
+        resolve({ results:results, status: 201 });
       
       });
   });
@@ -125,7 +125,7 @@ const addBookToList = (book_id, list_date, list_id) =>{
       
       if (dbErr) return reject(dbErr);
       
-      resolve({ book_id: results.book_id ,list_id: results.list_id, status: 201 });
+      resolve({ results:results, status: 201 });
     
     });
   });
@@ -141,7 +141,7 @@ const removeBookFromList = (book_id, list_date, list_id) =>{
       
       if (dbErr) return reject(dbErr);
       
-      resolve({ status: 201 });
+      resolve({ results:results, status: 201 });
     
     });
   });

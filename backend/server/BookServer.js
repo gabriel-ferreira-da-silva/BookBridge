@@ -69,7 +69,7 @@ router.post('/book', async (req, res) => {
 });
 
 
-router.put('/put', async (req, res) => {
+router.put('/book', async (req, res) => {
   const { title, isbn, targettitle, token } = req.body;
   const isAuthorized = await Auth.verifyToken(token);
   
@@ -93,7 +93,7 @@ router.put('/put', async (req, res) => {
 
 
 
-router.delete('/remove', async (req, res) => {
+router.delete('/book', async (req, res) => {
   const { title, token } = req.body;
   const isAuthorized = await Auth.verifyToken(token);
   

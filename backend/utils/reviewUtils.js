@@ -84,7 +84,7 @@ const put = (user_id,book_id,rating, commentary) => {
 const remove = (user_id,book_id) => {
   return new Promise((resolve, reject) => {
       
-      const query = 'DELETE FROM review WHERE user_id = ? and book_id = ?';
+      const query = 'DELETE FROM reviews WHERE user_id = ? and book_id = ?';
 
 
       db.query(query, [user_id,book_id], (dbErr, results) => {
