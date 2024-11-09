@@ -2,17 +2,8 @@ const express = require('express');
 const router = express.Router();
 require('dotenv').config();
 
-const db = require('../modules/database/database');
 const Auth = require('../utils/authUtils');
 const Book = require('../utils/bookUtils');
-
-db.connect((err) => {
-  if (err) {
-    console.error('Database connection failed:', err);
-    return;
-  }
-  console.log('Connected to MySQL database');
-});
 
 
 router.get('/book', async (req, res) => {

@@ -2,6 +2,7 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
-    "mysql2": "^3.11.4"
+    "mysql2": "^3.11.4",
+    "winston": "^3.16.0"
   }
 }
