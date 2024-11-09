@@ -1,22 +1,11 @@
 const db = require('../modules/database/database');
 
 
-db.connect((err) => {
-  if (err) {
-    console.error('Database connection failed:', err);
-    return;
-  }
-  console.log('Connected to MySQL database');
-});
-
-
-
 const fetchAll = () => {
   return new Promise((resolve, reject) => {
       db.query('SELECT * FROM clubs', (err, results) => {
-          
+        
           if (err) return reject(err);
-
           resolve(results);
 
       });

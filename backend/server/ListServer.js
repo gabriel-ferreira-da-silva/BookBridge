@@ -2,17 +2,9 @@ const express = require('express');
 const router = express.Router();
 require('dotenv').config();
 
-const db = require('../modules/database/database');
+const logger = require('../modules/logger/logger')
 const Auth = require('../utils/authUtils');
 const List = require('../utils/listUtils');
-
-db.connect((err) => {
-  if (err) {
-    console.error('Database connection failed:', err);
-    return;
-  }
-  console.log('Connected to MySQL database');
-});
 
 
 router.get('/list', async (req, res) => {
@@ -20,11 +12,13 @@ router.get('/list', async (req, res) => {
     
     const results = await List.fetchAll(); 
     res.json(results);
+    logger.info({req,"message":"successfull" })
 
   } catch (error) {
     
     res.status(500).send('Server error: ' + error.message);
-  
+    logger.error({req, error });
+
   }
 });
 
@@ -35,11 +29,14 @@ router.get('/list/name/:name', async (req, res) => {
     const {name} = req.params;
     const results = await List.fetch(name); 
     res.json(results);
+    logger.info({req,"message":"successfull" })
+
 
   } catch (error) {
     
     res.status(500).send('Server error: ' + error.message);
-  
+    logger.error({req, error });
+
   }
 });
 
@@ -57,12 +54,15 @@ router.post('/list', async (req, res) => {
     
     const result = await List.post(name, club_id);
     res.status(201).json(result);
+    logger.info({req,"message":"successfull" })
+
 
   } catch (error) {
     
     console.error("Error creating book:", error);
     res.status(500).send("Server error: " + error.message);
-  
+    logger.error({req, error });
+
   }
 });
 
@@ -80,12 +80,14 @@ router.put('/list', async (req, res) => {
     
     const result = await List.put(name, targetname);
     res.status(201).json(result);
+    logger.info({req,"message":"successfull" })
 
   } catch (error) {
     
     console.error("Error updating club:", error);
     res.status(500).send("Server error: " + error.message);
-  
+    logger.error({req, error });
+
   }
 });
 
@@ -103,12 +105,14 @@ router.delete('/list', async (req, res) => {
     
     const result = await List.remove(name);
     res.status(201).json(result);
+    logger.info({req,"message":"successfull" })
 
   } catch (error) {
     
     console.error("Error updating club:", error);
     res.status(500).send("Server error: " + error.message);
-  
+    logger.error({req, error });
+
   }
 });
 
@@ -128,12 +132,14 @@ router.get('/list/book/:list_id/:list_date/:token', async (req, res) => {
     
     const result = await List.getBooksOfList(list_date, list_id);
     res.status(201).json(result);
+    logger.info({req,"message":"successfull" })
 
   } catch (error) {
     
     console.error("Error updating club:", error);
     res.status(500).send("Server error: " + error.message);
-  
+    logger.error({req, error });
+
   }
 });
 
@@ -151,12 +157,14 @@ router.post('/list/book/', async (req, res) => {
     
     const result = await List.addBookToList( book_id, list_date, list_id);
     res.status(201).json(result);
+    logger.info({req,"message":"successfull" })
 
   } catch (error) {
     
     console.error("Error updating club:", error);
     res.status(500).send("Server error: " + error.message);
-  
+    logger.error({req, error });
+
   }
 });
 
@@ -174,12 +182,14 @@ router.delete('/list/book/', async (req, res) => {
     
     const result = await List.removeBookFromList( book_id, list_date, list_id);
     res.status(201).json(result);
+    logger.info({req,"message":"successfull" })
 
   } catch (error) {
     
     console.error("Error updating club:", error);
     res.status(500).send("Server error: " + error.message);
-  
+    logger.error({req, error });
+
   }
 });
 

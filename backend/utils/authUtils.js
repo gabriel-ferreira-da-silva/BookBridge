@@ -19,7 +19,6 @@ const hashPassword = (password) => {
         bcrypt.hash(password, 10, (hashErr, hashedPassword) => {
         
             if (hashErr) return reject(hashErr);
-
             resolve(hashedPassword);
         
         });
