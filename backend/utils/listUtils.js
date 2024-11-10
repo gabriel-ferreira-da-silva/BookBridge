@@ -14,7 +14,6 @@ const fetchAll = () => {
       db.query('SELECT * FROM readlist', (err, results) => {
           
           if (err) return reject(err);
-
           resolve(results);
 
       });
@@ -135,7 +134,6 @@ const removeBookFromList = (book_id, list_date, list_id) =>{
     db.query(query, [list_date, list_id, book_id], (dbErr, results) => {
       
       if (dbErr) return reject(dbErr);
-      
       resolve({ results:results, status: 201 });
     
     });

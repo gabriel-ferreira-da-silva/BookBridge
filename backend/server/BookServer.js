@@ -10,7 +10,7 @@ const logger =require('../modules/logger/logger');
 router.get('/book', async (req, res) => {
   try {
     
-    const results = await Book.fetchAll(); 
+    const results = await Book.fetchAll();
     res.json(results);
     logger.info(req);
     
