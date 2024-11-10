@@ -40,7 +40,7 @@ BEGIN
       FROM reviews
       GROUP BY book_id
    ) AS avg_ratings   
-   ON books.id = avg_ratings.book_id // 
+   ON books.id = avg_ratings.book_id;
 
 END //
 
