@@ -31,7 +31,7 @@ BEGIN
 END //
 
 
-CREATE PROCEDURE getAverageByBook(IN book_id INT)
+CREATE PROCEDURE getAverageByBook()
 BEGIN
    SELECT title, average 
    FROM books 
@@ -39,9 +39,9 @@ BEGIN
       SELECT book_id, AVG(rating) AS average 
       FROM reviews
       GROUP BY book_id
-   ) AS avg_ratings   -- Move the alias here, after the closing parenthesis
-   ON books.id = avg_ratings.book_id
-   WHERE books.id = book_id;  -- Adding a filter to return only the specific book
+   ) AS avg_ratings   
+   ON books.id = avg_ratings.book_id // 
+
 END //
 
 DELIMITER ;
