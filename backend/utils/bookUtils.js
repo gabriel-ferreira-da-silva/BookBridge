@@ -117,7 +117,7 @@ const post = (title, isbn) => {
       
       if (dbErr) return reject(dbErr);
       
-      resolve({ id: results.id, title:results.title, isbn:results.isbn,  status: 201 });
+      resolve({ results: results, status: 201 });
       
       });
   });
@@ -135,7 +135,7 @@ const put = (title, isbn, target) => {
 
       cache.del('all_books');  
 
-      resolve({ id: results.insertId, title: results.title , isbn: results.isbn,  status: 201 });
+      resolve({ results:results, status: 201 });
       
       });
   });
@@ -147,15 +147,14 @@ const remove = (title) => {
       
       const query = 'DELETE FROM books WHERE title = ?';
 
-
       db.query(query, [title], (dbErr, results) => {
         
         if (dbErr) return reject(dbErr);
         
-        resolve({ status: 201 });
+        resolve({ results: results, status: 201 });
       
       });
-      
+
       cache.del(`all_books`); 
       cache.del(`book:${title}`); 
   });

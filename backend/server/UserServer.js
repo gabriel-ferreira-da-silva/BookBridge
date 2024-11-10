@@ -10,7 +10,7 @@ require('dotenv').config();
 router.get('/user', async (req, res) => {
   try {
     
-    const results = await User.fetchAllUsers(); 
+    const results = await User.fetchAll(); 
     res.json(results);
     logger.info({req,res});
 
@@ -26,7 +26,7 @@ router.get('/user/username/:username', async (req, res) => {
   try {
 
     const { username } = req.params;
-    const results = await User.fetchUserByUsername(username); 
+    const results = await User.fetchByUsername(username); 
     res.json(results);
     logger.info({req,res});
 
@@ -51,7 +51,7 @@ router.put('/user', async (req, res) => {
 
   try {
 
-    const result = await User.putUser(username, name, email, hashedPassword);
+    const result = await User.put(username, name, email, hashedPassword);
     res.status(201).json(result);
     logger.info({req,res});
 
@@ -119,7 +119,7 @@ router.post('/user', async (req, res) => {
 router.post('/user/login', async (req, res) => {
   
   const { username, password } = req.body;    
-  const user = await User.verifyUser(username);
+  const user = await User.verify(username);
   const passwordIsValid = await Auth.verifyPassword(password, user.password);
 
   if(passwordIsValid==false || user==null){
