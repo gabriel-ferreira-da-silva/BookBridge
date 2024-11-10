@@ -43,3 +43,28 @@ or manually restart database, rebuild the API and run:
 ```bash
 npx jest
 ```
+
+## endpoints
+
+In request.sh file you may find examples of curl request  such as 
+
+```
+TOKEN="$(curl --header "Content-Type: application/json" 
+              --request POST 
+              --data '{"username":"user","password":"user"}' 
+              http://localhost:4000/api/user/login 
+              | jq -r '.token')"
+          
+curl --header "Content-Type: application/json" \
+     --request POST \
+     --data '{"title":"o vermelho e o negro","isbn":"00033", "token":"'$TOKEN'" }' \
+     http://localhost:4000/api/book
+```
+
+you can execute it and other endpoints with build:
+
+```
+./build.sh --request --user-create
+./build.sh --request --user-login
+```
+
