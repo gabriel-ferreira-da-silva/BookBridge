@@ -14,6 +14,7 @@ const fetchAllFromCache = () => {
       if (data) {
         return resolve(JSON.parse(data));
       }
+
       return resolve(null);
     
     });
@@ -51,6 +52,7 @@ const fetchAll = ()=>{
       console.error("Error in fetchAll:", error);
       reject(error);
     }
+
   })
 }
 
@@ -68,8 +70,10 @@ const verify = (username) =>{
             }
             
             resolve(results[0]);
-        });       
+        });   
+
     })
+
 }
 
 
@@ -90,7 +94,9 @@ const fetchByUsernameFromCache = (username) =>{
       return resolve(null);
     
     });
+
   });
+  
 }
 
 const fetchByUsernameFromDatabase = (username) =>{
