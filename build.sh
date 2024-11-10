@@ -23,7 +23,6 @@ if [ "$1" = "--database" ] || [ "$1" = "-p" ]; then
     exit 1
 fi
 
-
 if [ "$1" = "--request" ] || [ "$1" = "-req" ]; then
     cd scripts
     ./request.sh "$1" "$2"
@@ -32,8 +31,33 @@ if [ "$1" = "--request" ] || [ "$1" = "-req" ]; then
 fi
 
 
-if [ "$1" = "--run" ] || [ "$1" = "-r" ]; then
+if [ "$1" = "--run" ]; then
     cd scripts
-    ./run.sh & cd ..
+    lsof -t -i :4000 | xargs kill -9 
+    ./run.sh
+    cd ..
     exit 1
+fi
+
+if [ "$1" = "--test" ]; then
+
+    lsof -t -i :4000 | xargs kill -9 
+    
+    cd scripts 
+    ./run.sh &
+
+    cd ..
+    
+    echo "Waiting for the server to start..."
+    sleep 5
+
+    
+    while ! nc -z 127.0.0.1 4000; do
+        echo "Waiting for server at 127.0.0.1:4000..."
+        sleep 1 
+    done
+
+    ./build.sh --database --restart
+    cd backend/tests
+    npx jest
 fi
