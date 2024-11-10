@@ -3,12 +3,12 @@ if [ "$1" = "--request" ] || [ "$1" = "--req" ]; then
         curl --header "Content-Type: application/json" \
              --request POST \
              --data '{"username":"user","password":"user"}' \
-             http://localhost:4000/api/user/login
+             http://localhost:4000/api/user/login | jq -r '.token'
         exit 1
     fi
 
     if [ "$2" = "--user-create" ]; then
-        TOKEN="$(curl --header "Content-Type: application/json" --request POST --data '{"username":"user","password":"user"}'  http://localhost:4000/api/user/login)"
+        TOKEN="$(curl --header "Content-Type: application/json" --request POST --data '{"username":"user","password":"user"}'  http://localhost:4000/api/user/login | jq -r '.token')"
         
         curl --header "Content-Type: application/json" \
              --request POST\
@@ -69,11 +69,12 @@ if [ "$1" = "--request" ] || [ "$1" = "--req" ]; then
 
 
     if [ "$2" = "--book-create" ]; then
-        TOKEN="$(curl --header "Content-Type: application/json" --request POST --data '{"username":"user","password":"user"}'  http://localhost:4000/api/user/login)"
+        TOKEN="$(curl --header "Content-Type: application/json" --request POST --data '{"username":"user","password":"user"}'  http://localhost:4000/api/user/login | jq -r '.token')"
+        
         
         curl --header "Content-Type: application/json" \
              --request POST \
-             --data '{"title":"o vermelho e o negro","isbn":"00033", "token":'$TOKEN' }' \
+             --data '{"title":"o vermelho e o negro","isbn":"00033", "token":"'$TOKEN'" }' \
              http://localhost:4000/api/book
         exit 1
     fi

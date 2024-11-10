@@ -10,6 +10,17 @@ const listRouter = require('./server/ListServer');
 const statsRouter = require('./server/StatsServer');
 const reviewRouter = require('./server/ReviewServer');
 
+const db = require('../backend/modules/database/database');
+
+db.connect((err) => {
+  if (err) {
+    console.error('Database connection failed:', err);
+    return;
+  }
+  console.log('Connected to MySQL database');
+});
+
+
 const app = express();
 const port = process.env.PORT || 4000;
 
@@ -32,3 +43,5 @@ app.use('/api', reviewRouter);
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+module.exports = app;

@@ -44,21 +44,22 @@ router.get('/book/title/:title', async (req, res) => {
 
 router.post('/book', async (req, res) => {
   const { title, isbn, token } = req.body;
-  const isAuthorized = await Auth.verifyToken(token);
-  
-  if(isAuthorized == false){
-    res.status(500).send("authentication failed. are you registered?");
-    return;
-  }
 
   try {
     
+    const isAuthorized = await Auth.verifyToken(token);
+  
+    if(isAuthorized == false){
+      res.status(500).send("authentication failed. are you registered?");
+      return;
+    }
+
     const result = await Book.post(title, isbn);
     res.status(201).json(result);
     logger.info(req);
 
   } catch (error) {
-    
+
     console.error("Error creating book:", error);
     res.status(500).send("Server error: " + error.message);
     logger.error(req);
@@ -90,8 +91,6 @@ router.put('/book', async (req, res) => {
   
   }
 });
-
-
 
 router.delete('/book', async (req, res) => {
   const { title, token } = req.body;

@@ -52,7 +52,7 @@ router.put('/user', async (req, res) => {
   try {
 
     const result = await User.put(username, name, email, hashedPassword);
-    res.status(201).json(result);
+    res.status(201).json({token:result});
     logger.info({req,res});
 
   } catch (error) {
@@ -130,7 +130,7 @@ router.post('/user/login', async (req, res) => {
   try{
 
     const token = await Auth.getToken(user);
-    res.status(200).json(token);
+    res.status(200).json({token:token});
     logger.info({req,res});
   
   }catch(error){
