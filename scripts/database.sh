@@ -12,7 +12,7 @@ if [ "$1" = "--database" ] || [ "$1" = "-d" ]; then
         sudo mysql -u root < create_clubs.sql
         sudo mysql -u root < create_books.sql
         sudo mysql -u root < create_readlist.sql
-        sudo mysql -u root < create_compose.sql
+        sudo mysql -u root < create_reviews.sql
         sudo mysql -u root < create_membership.sql
         sudo mysql -u root < create_functions.sql
         echo "database restarted sucessfully"
