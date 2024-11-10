@@ -28,7 +28,7 @@ router.get('/book/title/:title', async (req, res) => {
 
     const {title} = req.params;
     const results = await Book.fetch(title); 
-    res.json(results);
+    res.status(201).json(results);
     logger.info(req);
 
 
@@ -70,14 +70,15 @@ router.post('/book', async (req, res) => {
 
 router.put('/book', async (req, res) => {
   const { title, isbn, targettitle, token } = req.body;
-  const isAuthorized = await Auth.verifyToken(token);
-  
-  if(isAuthorized == false){
-    res.status(500).send("authentication failed. are you registered?");
-    return;
-  }
 
   try {
+
+    const isAuthorized = await Auth.verifyToken(token);
+  
+    if(isAuthorized == false){
+      res.status(500).send("authentication failed. are you registered?");
+      return;
+    }
     
     const result = await Book.put(title, isbn, targettitle);
     res.status(201).json(result);
@@ -94,14 +95,16 @@ router.put('/book', async (req, res) => {
 
 router.delete('/book', async (req, res) => {
   const { title, token } = req.body;
-  const isAuthorized = await Auth.verifyToken(token);
-  
-  if(isAuthorized == false){
-    res.status(500).send("authentication failed. are you registered?");
-    return;
-  }
 
   try {
+
+    const isAuthorized = await Auth.verifyToken(token);
+  
+    if(isAuthorized == false){
+      res.status(500).send("authentication failed. are you registered?");
+      return;
+    }
+  
     
     const result = await Book.remove(title);
     res.status(201).json(result);
