@@ -15,6 +15,15 @@ const users = [
   { name: 'pedro', username: 'pedro_user', email: 'pedro@gmail', password: 'pedro' },
   { name: 'davi', username: 'davi_user', email: 'davi@gmail', password: 'davi' },
   { name: 'lucas', username: 'lucas_user', email: 'lucas@gmail', password: 'lucas' },
+  
+  { name: 'maria', username: 'maria_user', email: 'maria@gmail', password: 'maria' },
+  { name: 'julia', username: 'julia_user', email: 'julia@gmail', password: 'julia' },
+  { name: 'clara', username: 'clara_user', email: 'clara@gmail', password: 'clara' },
+
+  { name: 'alice', username: 'alice_user', email: 'alice@gmail', password: 'alice' },
+  { name: 'caio', username: 'caio_user', email: 'caio@gmail', password: 'caio' },
+  { name: 'eduarda', username: 'eduarda_user', email: 'eduarda@gmail', password: 'eduarda' },
+
 ];
 
 
