@@ -1,0 +1,18 @@
+USE bookBridgeDB;
+
+DELIMITER //
+
+CREATE FUNCTION getNumberOfBooks()
+RETURNS INT
+DETERMINISTIC
+BEGIN
+   DECLARE total INT DEFAULT 0;
+
+   SELECT COUNT(*) INTO total 
+   FROM books;
+
+   RETURN total;
+END //
+
+DELIMITER ;
+

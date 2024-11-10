@@ -7,6 +7,7 @@ const bookRouter = require('./server/BookServer');
 const clubRouter = require('./server/ClubServer');
 const userRouter = require('./server/UserServer');
 const listRouter = require('./server/ListServer');
+const statsRouter = require('./server/StatsServer');
 const reviewRouter = require('./server/ReviewServer');
 
 const app = express();
@@ -25,6 +26,7 @@ app.use('/api', bookRouter);
 app.use('/api', userRouter);
 app.use('/api', clubRouter);
 app.use('/api', listRouter);
+app.use('/api', statsRouter);
 app.use('/api', reviewRouter);
 
 app.listen(port, () => {
