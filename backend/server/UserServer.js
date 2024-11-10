@@ -42,14 +42,15 @@ router.get('/user/username/:username', async (req, res) => {
 router.put('/user', async (req, res) => {
   const { name, username, email, password, token } = req.body;
   const hashedPassword = await Auth.hashPassword(password);
-  const isAuthorized = await Auth.verifyToken(token);
-  
-  if(isAuthorized == false){
-    res.status(500).send("authentication failed. are you registered?");
-    return;
-  }
 
   try {
+
+    const isAuthorized = await Auth.verifyToken(token);
+  
+    if(isAuthorized == false){
+      res.status(500).send("authentication failed. are you registered?");
+      return;
+    }
 
     const result = await User.put(username, name, email, hashedPassword);
     res.status(201).json({token:result});
@@ -66,16 +67,17 @@ router.put('/user', async (req, res) => {
 
 router.delete('/user', async (req, res) => {
   const { username, token } = req.body;
-  const isAuthorized = await Auth.verifyToken(token);
   
-  if(isAuthorized == false){
-    res.status(500).send("authentication failed. are you registered?");
-    return;
-  }
-
   try {
 
-    const result = await User.deleteUser(username);
+    const isAuthorized = await Auth.verifyToken(token);
+  
+    if(isAuthorized == false){
+      res.status(500).send("authentication failed. are you registered?");
+      return;
+    }
+
+    const result = await User.remove(username);
     res.status(201).json(result);
     logger.info({req,res});
 
@@ -92,16 +94,18 @@ router.delete('/user', async (req, res) => {
 router.post('/user', async (req, res) => {
   const { name, username, email, password, token } = req.body;
   const hashedPassword = await Auth.hashPassword(password);
-  const isAuthorized = await Auth.verifyToken(token);
   
-  if(isAuthorized == false){
-    res.status(500).send("authentication failed. are you registered?");
-    return;
-  }
 
   try {
-    
-    const result = await User.postUser(name, username, email, hashedPassword);
+
+    const isAuthorized = await Auth.verifyToken(token);
+  
+    if(isAuthorized == false){
+      res.status(500).send("authentication failed. are you registered?");
+      return;
+    }
+
+    const result = await User.post(name, username, email, hashedPassword);
     res.status(201).json(result);
     logger.info({req,res});
 
@@ -120,17 +124,19 @@ router.post('/user/login', async (req, res) => {
   
   const { username, password } = req.body;    
   const user = await User.verify(username);
-  const passwordIsValid = await Auth.verifyPassword(password, user.password);
-
-  if(passwordIsValid==false || user==null){
-    res.status(500).send("error in password or user not registered")
-    return;
-  }
   
   try{
 
+    const passwordIsValid = await Auth.verifyPassword(password, user.password);
+
+    if(passwordIsValid==false || user==null){
+      res.status(500).send("error in password or user not registered")
+      return;
+    }
+
+    
     const token = await Auth.getToken(user);
-    res.status(200).json({token:token});
+    res.status(201).json({token:token});
     logger.info({req,res});
   
   }catch(error){

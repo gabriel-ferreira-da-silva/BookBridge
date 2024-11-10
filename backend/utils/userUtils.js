@@ -175,14 +175,11 @@ const post = (name, username, email, password) => {
   const remove = (username) => {
     return new Promise((resolve, reject) => {
 
-      const query = 'DELETE FROM users WHERE users.username = ?;';
+      const query = 'DELETE FROM users WHERE username = ?;';
   
       db.query(query, [username], (dbErr, results) => {
         if (dbErr) return reject(dbErr); 
         
-        if (results.affectedRows === 0) {
-          return reject(new Error('No user found with that username')); 
-        }
 
         cache.del('all_users');
         cache.del('user:username:'+username);
