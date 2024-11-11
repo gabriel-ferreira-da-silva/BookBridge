@@ -132,11 +132,18 @@ if [ "$1" = "--request" ] || [ "$1" = "--req" ]; then
 
 
     if [ "$2" = "--review-create" ]; then
-        TOKEN="$(curl --header "Content-Type: application/json" --request POST --data '{"username":"user","password":"user"}'  http://localhost:4000/api/user/login)"
+        TOKEN="$(curl --header "Content-Type: application/json" 
+                      --request POST 
+                      --data '{"username":"user","password":"user"}'  
+                      http://localhost:4000/api/user/login
+                      | jq -r '.token' )"
         
         curl --header "Content-Type: application/json" \
              --request POST \
-             --data '{"user_id":1, "book_id":2, "rating":9.9 ,"commentary":"o melhor livro existencialista já escrito, dostoievsky é um genio", "token":'$TOKEN' }' \
+             --data '{"user_id":1, "book_id":2, "rating":9.9 ,
+                      "commentary":"o melhor livro existencialista já escrito,
+                       dostoievsky é um genio",
+                       "token":'$TOKEN' }' \
              http://localhost:4000/api/review
         exit 1
     fi
